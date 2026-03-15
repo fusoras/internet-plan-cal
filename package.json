@@ -1,6 +1,5 @@
 {
   "name": "internet-plan-cal",
-  "module": "index.ts",
   "type": "module",
   "private": true,
   "devDependencies": {

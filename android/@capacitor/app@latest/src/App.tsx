@@ -1,5 +1,5 @@
 import "./index.css";
-import { Main } from "@/components/ui/Main"
+import { Main } from "@/components/Main"
 
 export function App() {
   return (
