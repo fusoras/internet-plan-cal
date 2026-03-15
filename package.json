@@ -1,0 +1,21 @@
+{
+  "name": "internet-plan-cal",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "workspaces": [
+    "android/@capacitor/app@latest",
+    "console",
+    "web"
+  ],
+  "scripts": {
+    "dev:console": "bun run --filter console dev",
+    "dev:android": "bun run --filter bun-react-template dev:web"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

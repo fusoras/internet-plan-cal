@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="test.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <main>
+        <h2>Input</h2>
+        <label for="used-gb-input">MB consumidos</label>
+        <input id="used-gb-input" type="number" min="0" step="1" placeholder="1000 = 1gb" value="31700"/>
+        <label for="max-gb-input">MB maximos del plan</label>
+        <input id="max-gb-input" type="number" min="0" step="1" placeholder="200000" value="200000"/>
+
+        <p id="gb-plan-2">
+            MB del plan: <span id="val-max-plan">200,000</span>MB |
+            MB consumidos: <span id="val-used">31,700</span>MB |
+            MB restantes: <span id="val-free">168,300</span>MB
+        </p>
+        <p id="gb-plan-3">Dia actual: <span id="val-day-now">--</span></p>
+        <p id="gb-plan-4">Dias desde el ultimo reseteo: <span id="val-day-current">--</span></p>
+        <h2 id="gb-plan-5">Recomendaciones</h2>
+        <p id="gb-plan-6">MB recomendados consumir por dia: <span id="val-avg-per-day">--</span>MB</p>
+        <p id="gb-plan-7">Max consumir por ahora: <span id="val-max-accumulated">--</span>MB</p>
+        <p id="gb-plan-8"><span id="val-limit-message">Calculando recomendacion...</span></p>
+        
+    </main>
+</body>
+</html>
+<style>
+    * {
+        font-family: sans-serif;
+        color-scheme: light dark;
+    }
+    html {
+        margin: 0;
+    }
+    body {
+        width: min(700px, 90%);
+        margin: auto;
+
+    }
+    main {
+        height: 100dvh;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+
+        h2 {
+            margin-block: 1lh;
+        }
+        p {
+            margin-block: .5lh;
+        }
+
+        input {
+            padding: .4rem .5rem;
+            max-width: 14rem;
+            margin-bottom: .8rem;
+        }
+
+        label {
+            margin-bottom: .2rem;
+        }
+    }
+</style>
