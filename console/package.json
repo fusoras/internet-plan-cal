@@ -4,6 +4,6 @@
     "@js-temporal/polyfill": "^0.5.1"
   },
   "scripts": {
-    "dev": "bun run plan-internet-gb.ts"
+    "dev": "bun --watch plan-internet-gb.ts"
   }
 }

@@ -1,47 +1,46 @@
 import { Temporal } from "@js-temporal/polyfill";
 
-function obtenerConteoDesdeDia8(fecha = Temporal.Now.plainDateISO()) {
+function getCycleDay(dateT = Temporal.Now.plainDateISO()) {
   // day 8 of the month is the reset day for the plan
-  const inicioCiclo =
-    fecha.day >= 8
-      ? fecha.with({ day: 8 })
-      : fecha.subtract({ months: 1 }).with({ day: 8 });
+  const init =
+    dateT.day >= 8
+      ? dateT.with({ day: 8 })
+      : dateT.subtract({ months: 1 }).with({ day: 8 });
 
-  const diaDelCiclo = inicioCiclo.until(fecha, { largestUnit: "day" }).days;
+  const cycleDay = init.until(dateT, { largestUnit: "day" }).days;
 
-  return { inicioCiclo, diaDelCiclo };
+  return { init, cycleDay };
 }
 
 // Explample with today (temporal)
-const hoy = Temporal.Now.plainDateISO();
-const { inicioCiclo, diaDelCiclo } = obtenerConteoDesdeDia8(hoy);
+// const falseDate = Temporal.Now.plainDateISO().with({ day: 17 })
+// console.log(`false date: ${falseDate}`)
+const todayT = Temporal.Now.plainDateISO();
+const { init, cycleDay } = getCycleDay(todayT);
 
-console.log("Hoy:", hoy.toString());
-console.log("Inicio ciclo:", inicioCiclo.toString());
-console.log("Día del ciclo:", diaDelCiclo);
+console.log("-- Test Temporal --")
+console.log("Today:", todayT.toString());
+console.log("Inicio ciclo:", init.toString());
+console.log("Día del ciclo:", cycleDay);
 // Const values
-export const usedMB = 32100
-export const maxMB = 200000
-const dayRestartPlan = 8
-const daysInMonth = 30
+// export const usedMB = 42100
+// export const maxMB = 200000
+const inputUsedMb = 42100
+const inputPlanMb = 200000
+const planDuration = 30
 
-const today = new Date()
-export const dayNow = today.getDate()
-// Temporal
-const nowDay = Temporal.Now.plainDateISO().day;
-console.log(nowDay);
+// const today = new Date()
+// export const dayNow = today.getDate()
+// export const nFormat = (number: number) => (number.toLocaleString('es-MX'))
+export const mbFormat = (number: number) => (number.toLocaleString('es-MX'))
 
-const fechaPredeterminada = Temporal.Now.plainDateISO().with({ day: 8 });
-console.log(fechaPredeterminada.toString()); // 2026-03-15
-
-export const dayCurrent = dayNow - dayRestartPlan
-export const nFormat = (number: number) => (number.toLocaleString('es-MX'))
-
-export function calculate(max = maxMB, used = usedMB) {
+export function calculate(max = inputPlanMb, used = inputUsedMb) {
   const freeGB = max - used
-  const avgPerDay = Math.trunc(max / daysInMonth); // Math.trunc quita los decimales
-  const maxAccumulated = Math.trunc((max * dayCurrent) / daysInMonth)
-  const limited = usedMB - maxAccumulated
+  const avgPerDay = Math.trunc(max / planDuration); // Math.trunc quita los decimales
+  const maxAccumulated = Math.trunc((max * cycleDay) / planDuration)
+  const limited = used - maxAccumulated
+  console.log("-- Test calculate --")
+  console.log("Limited: ", limited)
 
   return { max, used, freeGB, maxAccumulated, avgPerDay, limited }
 }
@@ -56,18 +55,18 @@ interface Gb {
 // Console
 function showConsole ({ max, used, freeGB, maxAccumulated, avgPerDay, limited }: Gb ) {
   console.log("-------------------------------")
-  console.log(` MB del plan: ${nFormat(max)}MB | MB consumidos: ${nFormat(used)}MB | MB restantes: ${nFormat(freeGB)}`)
+  console.log(` MB del plan: ${mbFormat(max)}MB | MB consumidos: ${mbFormat(used)}MB | MB restantes: ${mbFormat(freeGB)}`)
   console.log("-------------------------------")
-  console.log(`- Dia actual: ${dayNow}`)
-  console.log(`- Dias desde el ultimo reseteo: ${dayCurrent}`)
+  console.log(`- Dia actual: ${todayT}`)
+  console.log(`- Dias desde el ultimo reseteo: ${cycleDay}`)
   console.log("-------------------------------")
   console.log("# Recomendaciones")
-  console.log(`- MB recomendados consumir por dia: ${nFormat(avgPerDay)}MB`)
-  console.log(`- Max consumir por ahora: ${nFormat(maxAccumulated)}MB`)
+  console.log(`- MB recomendados consumir por dia: ${mbFormat(avgPerDay)}MB`)
+  console.log(`- Hoy consumir maximo hasta: ${mbFormat(maxAccumulated)}MB`)
   if(limited > 0) {
-    console.log(`- Sobrepasaste los MB recomendados por ${nFormat(limited)}MB`)
+    console.log(`- Sobrepasaste los MB recomendados por ${mbFormat(limited)}MB`)
   }else if (limited < 0) {
-    console.log(`- Aun tienes MB por consumir: ${nFormat(Math.abs(limited))}MB`)
+    console.log(`- Aun tienes MB por consumir: ${mbFormat(Math.abs(limited))}MB`)
   }
   console.log("-------------------------------")
 
