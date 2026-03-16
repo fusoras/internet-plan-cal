@@ -12,17 +12,17 @@ function getCycleDay(dateT = Temporal.Now.plainDateISO()) {
   return { init, cycleDay };
 }
 
-// Explample with today (temporal)
+// # Example with today (temporal)
 // const falseDate = Temporal.Now.plainDateISO().with({ day: 17 })
 // console.log(`false date: ${falseDate}`)
 const todayT = Temporal.Now.plainDateISO();
 const { init, cycleDay } = getCycleDay(todayT);
 
-console.log("-- Test Temporal --")
-console.log("Today:", todayT.toString());
-console.log("Inicio ciclo:", init.toString());
-console.log("Día del ciclo:", cycleDay);
-// Const values
+// console.log("-- Test Temporal --")
+// console.log("Today:", todayT.toString());
+// console.log("Inicio ciclo:", init.toString());
+// console.log("Día del ciclo:", cycleDay);
+// # Const values
 // export const usedMB = 42100
 // export const maxMB = 200000
 const inputUsedMb = 42100
@@ -34,26 +34,24 @@ const planDuration = 30
 // export const nFormat = (number: number) => (number.toLocaleString('es-MX'))
 export const mbFormat = (number: number) => (number.toLocaleString('es-MX'))
 
-export function calculate(max = inputPlanMb, used = inputUsedMb) {
+export function calculateMb(max = inputPlanMb, used = inputUsedMb) {
   const freeGB = max - used
   const avgPerDay = Math.trunc(max / planDuration); // Math.trunc quita los decimales
   const maxAccumulated = Math.trunc((max * cycleDay) / planDuration)
-  const limited = used - maxAccumulated
-  console.log("-- Test calculate --")
-  console.log("Limited: ", limited)
+  const overuseMb = used - maxAccumulated
 
-  return { max, used, freeGB, maxAccumulated, avgPerDay, limited }
+  return { max, used, freeGB, maxAccumulated, avgPerDay, overuseMb }
 }
-interface Gb {
+interface Mb {
   max: number
   used: number
   freeGB: number
   maxAccumulated: number
   avgPerDay: number
-  limited: number
+  overuseMb: number
 }
-// Console
-function showConsole ({ max, used, freeGB, maxAccumulated, avgPerDay, limited }: Gb ) {
+// # Console
+function showConsole ({ max, used, freeGB, maxAccumulated, avgPerDay, overuseMb }: Mb ) {
   console.log("-------------------------------")
   console.log(` MB del plan: ${mbFormat(max)}MB | MB consumidos: ${mbFormat(used)}MB | MB restantes: ${mbFormat(freeGB)}`)
   console.log("-------------------------------")
@@ -63,10 +61,10 @@ function showConsole ({ max, used, freeGB, maxAccumulated, avgPerDay, limited }:
   console.log("# Recomendaciones")
   console.log(`- MB recomendados consumir por dia: ${mbFormat(avgPerDay)}MB`)
   console.log(`- Hoy consumir maximo hasta: ${mbFormat(maxAccumulated)}MB ` + (
-    limited > 0 
-    ? `(Sobrepasado: ${mbFormat(limited)})` 
-    : `(Dentro del limite: ${mbFormat(Math.abs(limited))}MB)`))
+    overuseMb > 0 
+    ? `(Sobrepasado: ${mbFormat(overuseMb)})` 
+    : `(Dentro del limite: ${mbFormat(Math.abs(overuseMb))}MB)`))
   console.log("-------------------------------")
 
 }
-showConsole(calculate())
+showConsole(calculateMb())
