@@ -1,4 +1,4 @@
-Is necesary bun to run the project, you can install it from https://bun.sh/
+Is necesary bun to run the project, you can install it from [bun](https://bun.sh/)
 
 In the root of the android project, run:
 ```bash
