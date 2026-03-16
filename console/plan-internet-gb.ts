@@ -62,12 +62,10 @@ function showConsole ({ max, used, freeGB, maxAccumulated, avgPerDay, limited }:
   console.log("-------------------------------")
   console.log("# Recomendaciones")
   console.log(`- MB recomendados consumir por dia: ${mbFormat(avgPerDay)}MB`)
-  console.log(`- Hoy consumir maximo hasta: ${mbFormat(maxAccumulated)}MB`)
-  if(limited > 0) {
-    console.log(`- Sobrepasaste los MB recomendados por ${mbFormat(limited)}MB`)
-  }else if (limited < 0) {
-    console.log(`- Aun tienes MB por consumir: ${mbFormat(Math.abs(limited))}MB`)
-  }
+  console.log(`- Hoy consumir maximo hasta: ${mbFormat(maxAccumulated)}MB ` + (
+    limited > 0 
+    ? `(Sobrepasado: ${mbFormat(limited)})` 
+    : `(Dentro del limite: ${mbFormat(Math.abs(limited))}MB)`))
   console.log("-------------------------------")
 
 }
