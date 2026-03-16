@@ -8,32 +8,47 @@ import {
 } from "@/components/ui/field"
 import { maxMB,usedMB, nowDay, nFormat, dayCurrentTemporal, calculate } from '@/lib/plan-internet-gb'
 import { useState} from "react"
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent } from "@/components/ui/card"
+
+type Mbs = { valueMin?: number, valueMax?: number }
+
 export function Main(){
     const [inputUsedMb, setInputUsedMb] = useState(usedMB)
+    const [inputMaxMb, setInputMaxMb] = useState(maxMB)
     const [spentMb, setSpentMb] = useState(usedMB)
+    const [maxMb, setMaxMb] = useState(maxMB)
     const [isAriaDisabled, setIsAriaDisabled] = useState(false)
     const { avgPerDay, maxAccumulated } = calculate(maxMB, usedMB)
 
-    function handleInput(value: number) {
-      if (value > maxMB) {
-        setIsAriaDisabled(true)
-        return
-      }
+    function handleInput({ valueMin, valueMax }: Mbs = {}) {
+        if (valueMin !== undefined) {
+            if (valueMin > maxMB) {
+                setIsAriaDisabled(true)
+                return
+            }
+            setInputUsedMb(valueMin)
+            console.log("valueMin in handleinput", valueMin)
+        }
+        if ( valueMax !== undefined) {
+            setInputMaxMb(valueMax)
+            console.log("valueMax in handleinput", valueMax)
+        }
       setIsAriaDisabled(false)
-      setInputUsedMb(value)
     }
 
     function handleButton (){
         setSpentMb(inputUsedMb)
-        console.log("value", inputUsedMb)
+        setMaxMb(inputMaxMb)
+        console.log("valueMin", inputUsedMb)
+        console.log("valueMax", inputMaxMb)
     }
     return (
         <main className='flex flex-col place-content-center place-items-center'>
-            <h2 className='text-2xl'>Input</h2>
             <FieldGroup>
                 <Field>
                     <FieldLabel htmlFor="fieldgroup-name">MB consumidos</FieldLabel>
-                    <Input aria-invalid={isAriaDisabled} id="fieldgroup-name" type="number" min="0" step="1" placeholder="1000 = 1gb" onChange={(e) => handleInput(Number(e.target.value))} />
+                    <Input aria-invalid={isAriaDisabled} id="fieldgroup-name" type="number" min="0" step="1" placeholder="1000 = 1gb" onChange={(e) => handleInput({valueMin: Number(e.target.value)})} />
                 </Field>
                 <Field>
                     <FieldLabel htmlFor="fieldgroup-email">MB maximos del plan</FieldLabel>
@@ -43,27 +58,34 @@ export function Main(){
                         min="0"
                         step="1"
                         placeholder="200000"
+                        onChange={(e) => handleInput({valueMax: Number(e.target.value)})}
                     />
                     <FieldDescription>
                     </FieldDescription>
                 </Field>
-                <Field orientation="horizontal">
-                    <Button type="reset" variant="outline">
-                    Reset
-                    </Button>
+                <Field orientation="horizontal" className="flex justify-center">
                     <Button type="submit" onClick={() => handleButton()}>Submit</Button>
                 </Field>
             </FieldGroup>
-            <p id="gb-plan-2">
-                MB del plan: {nFormat(maxMB)}MB |
-                MB consumidos: {nFormat(spentMb)}MB |
-                MB restantes: {nFormat(maxMB - spentMb)}MB
-            </p>
-            <p id="gb-plan-3">Dia actual: {nowDay}</p>
-            <p id="gb-plan-4">Dias desde el ultimo reseteo: {dayCurrentTemporal}</p>
-            <h2 id="gb-plan-5">Recomendaciones</h2>
-            <p id="gb-plan-6">MB recomendados consumir por dia: {nFormat(avgPerDay)}MB</p>
-            <p id="gb-plan-7">Max consumir por ahora: {nFormat(maxAccumulated)}MB</p>
+            <Card className="mt-4">
+              <CardContent className="space-y-1 text-sm">
+                <div className="flex items-center gap-1">
+                    <p>MB del plan: <Badge variant="outline">{nFormat(inputMaxMb)}MB</Badge></p>
+                    <div className="border-l h-10 md:h-5"></div>
+                    <p>MB consumidos: <Badge variant="default">{nFormat(spentMb)}MB</Badge></p>
+                    <div className="border-l h-10 md:h-5"></div>
+                    <p>MB restantes: <Badge variant="destructive" >{nFormat(maxMB - spentMb)}MB</Badge></p>
+                </div>
+                <div className="border-t mt-3 p-2">
+                    <p>Dia actual: <Badge variant="outline">{nowDay}</Badge></p>
+                    <p>Dias desde el ultimo reseteo: <Badge variant="outline">{dayCurrentTemporal}</Badge></p>
+                    <h2 className="text-xl">Recomendaciones</h2>
+                    <p>MB recomendados consumir por dia: <Badge variant="outline">{nFormat(avgPerDay)}MB</Badge></p>
+                    <p>Max consumir por ahora: <Badge variant="outline">{nFormat(maxAccumulated)}MB</Badge></p>
+                </div>
+              </CardContent>
+            </Card>
+
         </main>
     )
 }
