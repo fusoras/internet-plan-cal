@@ -1,5 +1,5 @@
 {
-  "appId": "com.uruka.internetplancal",
+  "appId": "com.example.internetplancal",
   "appName": "Internet Plan Cal",
   "webDir": "dist",
   "plugins": {
