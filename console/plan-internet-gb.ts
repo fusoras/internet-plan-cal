@@ -1,27 +1,25 @@
 import { Temporal } from "@js-temporal/polyfill";
 
 function obtenerConteoDesdeDia8(fecha = Temporal.Now.plainDateISO()) {
-  // Si estamos en día 8 o después, el ciclo empezó este mes.
-  // Si estamos antes de 8, el ciclo empezó el mes anterior.
+  // day 8 of the month is the reset day for the plan
   const inicioCiclo =
     fecha.day >= 8
       ? fecha.with({ day: 8 })
       : fecha.subtract({ months: 1 }).with({ day: 8 });
 
-  // Día del ciclo (1-based)
   const diaDelCiclo = inicioCiclo.until(fecha, { largestUnit: "day" }).days;
 
   return { inicioCiclo, diaDelCiclo };
 }
 
-// Ejemplo con hoy
+// Explample with today (temporal)
 const hoy = Temporal.Now.plainDateISO();
 const { inicioCiclo, diaDelCiclo } = obtenerConteoDesdeDia8(hoy);
 
 console.log("Hoy:", hoy.toString());
 console.log("Inicio ciclo:", inicioCiclo.toString());
 console.log("Día del ciclo:", diaDelCiclo);
-
+// Const values
 export const usedMB = 32100
 export const maxMB = 200000
 const dayRestartPlan = 8
@@ -55,7 +53,7 @@ interface Gb {
   avgPerDay: number
   limited: number
 }
-// console
+// Console
 function showConsole ({ max, used, freeGB, maxAccumulated, avgPerDay, limited }: Gb ) {
   console.log("-------------------------------")
   console.log(` MB del plan: ${nFormat(max)}MB | MB consumidos: ${nFormat(used)}MB | MB restantes: ${nFormat(freeGB)}`)
