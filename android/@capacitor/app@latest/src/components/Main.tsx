@@ -1,29 +1,24 @@
+import { useState} from "react"
+import { nowDay, nFormat, dayCurrentTemporal, calculate } from '@/lib/plan-internet-gb'
+
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field"
-import { maxMB,usedMB, nowDay, nFormat, dayCurrentTemporal, calculate } from '@/lib/plan-internet-gb'
-import { useState} from "react"
-import { Badge } from "@/components/ui/badge"
+import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 
 type Mbs = { valueMin?: number, valueMax?: number }
 
 export function Main(){
-    const [inputUsedMb, setInputUsedMb] = useState(usedMB)
-    const [inputMaxMb, setInputMaxMb] = useState(maxMB)
-    const [spentMb, setSpentMb] = useState(usedMB)
-    const [maxMb, setMaxMb] = useState(maxMB)
+    const [inputUsedMb, setInputUsedMb] = useState(0)
+    const [inputMaxMb, setInputMaxMb] = useState(200000)
+    const [spentMb, setSpentMb] = useState(0)
     const [isAriaDisabled, setIsAriaDisabled] = useState(false)
-    const { avgPerDay, maxAccumulated } = calculate(maxMB, usedMB)
+    const { avgPerDay, maxAccumulated } = calculate(inputMaxMb, inputUsedMb)
 
     function handleInput({ valueMin, valueMax }: Mbs = {}) {
-        if (valueMin !== undefined) {
-            if (valueMin > maxMB) {
+        if (valueMin !== undefined && inputMaxMb !== undefined) {
+            if (valueMin > inputMaxMb) {
                 setIsAriaDisabled(true)
                 return
             }
@@ -39,7 +34,7 @@ export function Main(){
 
     function handleButton (){
         setSpentMb(inputUsedMb)
-        setMaxMb(inputMaxMb)
+        setInputMaxMb(inputMaxMb)
         console.log("valueMin", inputUsedMb)
         console.log("valueMax", inputMaxMb)
     }
@@ -74,7 +69,7 @@ export function Main(){
                     <div className="border-l h-10 md:h-5"></div>
                     <p>MB consumidos: <Badge variant="default">{nFormat(spentMb)}MB</Badge></p>
                     <div className="border-l h-10 md:h-5"></div>
-                    <p>MB restantes: <Badge variant="destructive" >{nFormat(maxMB - spentMb)}MB</Badge></p>
+                    <p>MB restantes: <Badge variant="destructive" >{nFormat(inputMaxMb - spentMb)}MB</Badge></p>
                 </div>
                 <div className="border-t mt-3 p-2">
                     <p>Dia actual: <Badge variant="outline">{nowDay}</Badge></p>
