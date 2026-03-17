@@ -15,8 +15,8 @@ function getCycleDay(dateT = Temporal.Now.plainDateISO()) {
 // # Example with today (temporal)
 // const falseDate = Temporal.Now.plainDateISO().with({ month: 4, day: 6 })
 // console.log(`false date: ${falseDate}`)
-const todayT = Temporal.Now.plainDateISO();
-const { init, cycleDay } = getCycleDay(todayT);
+export const todayT = Temporal.Now.plainDateISO();
+export const { init, cycleDay } = getCycleDay(todayT);
 
 // console.log("-- Test Temporal --")
 // console.log("Today:", todayT.toString());
