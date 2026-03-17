@@ -13,7 +13,7 @@ function getCycleDay(dateT = Temporal.Now.plainDateISO()) {
 }
 
 // # Example with today (temporal)
-// const falseDate = Temporal.Now.plainDateISO().with({ day: 17 })
+// const falseDate = Temporal.Now.plainDateISO().with({ month: 4, day: 6 })
 // console.log(`false date: ${falseDate}`)
 const todayT = Temporal.Now.plainDateISO();
 const { init, cycleDay } = getCycleDay(todayT);
@@ -25,7 +25,7 @@ const { init, cycleDay } = getCycleDay(todayT);
 // # Const values
 // export const usedMB = 42100
 // export const maxMB = 200000
-const inputUsedMb = 42100
+const inputUsedMb = 42000
 const inputPlanMb = 200000
 const planDuration = 30
 
@@ -55,15 +55,15 @@ function showConsole ({ max, used, freeGB, maxAccumulated, avgPerDay, overuseMb 
   console.log("-------------------------------")
   console.log(` MB del plan: ${mbFormat(max)}MB | MB consumidos: ${mbFormat(used)}MB | MB restantes: ${mbFormat(freeGB)}`)
   console.log("-------------------------------")
-  console.log(`- Dia actual: ${todayT}`)
-  console.log(`- Dias desde el ultimo reseteo: ${cycleDay}`)
+  console.log(`- Día actual: ${todayT}`)
+  console.log(`- Días desde el último reseteo: ${cycleDay}`)
   console.log("-------------------------------")
   console.log("# Recomendaciones")
-  console.log(`- MB recomendados consumir por dia: ${mbFormat(avgPerDay)}MB`)
-  console.log(`- Hoy consumir maximo hasta: ${mbFormat(maxAccumulated)}MB ` + (
+  console.log(`- MB recomendados consumir por día: ${mbFormat(avgPerDay)}MB`)
+  console.log(`- Hoy consumir máximo hasta: ${mbFormat(maxAccumulated)}MB ` + (
     overuseMb > 0 
     ? `(Sobrepasado: ${mbFormat(overuseMb)})` 
-    : `(Dentro del limite: ${mbFormat(Math.abs(overuseMb))}MB)`))
+    : `(Dentro del límite: ${mbFormat(Math.abs(overuseMb))}MB)`))
   console.log("-------------------------------")
 
 }
