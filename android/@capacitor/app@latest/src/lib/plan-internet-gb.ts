@@ -42,7 +42,7 @@ export function calculate(max = maxMB, used = usedMB) {
   const freeGB = max - used
   const avgPerDay = Math.trunc(max / daysInMonth); // Math.trunc quita los decimales
   const maxAccumulated = Math.trunc((max * dayCurrent) / daysInMonth)
-  const limited = usedMB - maxAccumulated
+  const limited = used - maxAccumulated
 
   return { max, used, freeGB, maxAccumulated, avgPerDay, limited }
 }
