@@ -1,5 +1,5 @@
 import { useState} from "react"
-import { nowDay, nFormat, dayCurrentTemporal, calculate } from '@/lib/plan-internet-gb'
+import { todayT, mbFormat, cycleDay, calculateMb } from '@/lib/plan-internet-gb'
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -13,8 +13,9 @@ export function Main(){
     const [inputUsedMb, setInputUsedMb] = useState(0)
     const [inputMaxMb, setInputMaxMb] = useState(200000)
     const [spentMb, setSpentMb] = useState(0)
+    const [maxMb, setMaxMb] = useState(0)
     const [isAriaDisabled, setIsAriaDisabled] = useState(false)
-    const { avgPerDay, maxAccumulated, limited } = calculate(inputMaxMb, inputUsedMb)
+    const { avgPerDay, maxAccumulated, overuseMb } = calculateMb(inputMaxMb, inputUsedMb)
 
     function handleInput({ valueMin, valueMax }: Mbs = {}) {
         if (valueMin !== undefined && inputMaxMb !== undefined) {
@@ -34,7 +35,7 @@ export function Main(){
 
     function handleButton (){
         setSpentMb(inputUsedMb)
-        setInputMaxMb(inputMaxMb)
+        setMaxMb(inputMaxMb)
         console.log("valueMin", inputUsedMb)
         console.log("valueMax", inputMaxMb)
     }
@@ -65,18 +66,18 @@ export function Main(){
             <Card className="mt-4">
               <CardContent className="space-y-1 text-sm">
                 <div className="flex items-center gap-1">
-                    <p>MB del plan: <Badge variant="outline">{nFormat(inputMaxMb)}MB</Badge></p>
+                    <p>MB del plan: <Badge variant="outline">{mbFormat(maxMb)}MB</Badge></p>
                     <div className="border-l h-10 md:h-5"></div>
-                    <p>MB consumidos: <Badge variant="default">{nFormat(spentMb)}MB</Badge></p>
+                    <p>MB consumidos: <Badge variant="default">{mbFormat(spentMb)}MB</Badge></p>
                     <div className="border-l h-10 md:h-5"></div>
-                    <p>MB restantes: <Badge variant="destructive" >{nFormat(inputMaxMb - spentMb)}MB</Badge></p>
+                    <p>MB restantes: <Badge variant="destructive" >{mbFormat(maxMb - spentMb)}MB</Badge></p>
                 </div>
                 <div className="border-t mt-3 p-2">
-                    <p>Día actual: <Badge variant="outline">{nowDay}</Badge></p>
-                    <p>Días desde el último reseteo: <Badge variant="outline">{dayCurrentTemporal}</Badge></p>
+                    <p>Día actual: <Badge variant="outline">{todayT.day}</Badge></p>
+                    <p>Días desde el último reseteo: <Badge variant="outline">{cycleDay}</Badge></p>
                     <h2 className="text-xl">Recomendaciones</h2>
-                    <p>MB recomendados consumir por día: <Badge variant="outline">{nFormat(avgPerDay)}MB</Badge></p>
-                    <p>Hoy consumir máximo hasta: <Badge variant="outline">{nFormat(maxAccumulated)}MB</Badge> {limited > 0 ? `(Sobrepasado: ${nFormat(limited)})` : `(Dentro del límite: ${nFormat(Math.abs(limited))}MB)`}</p>
+                    <p>MB recomendados consumir por día: <Badge variant="outline">{mbFormat(avgPerDay)}MB</Badge></p>
+                    <p>Hoy consumir máximo hasta: <Badge variant="outline">{mbFormat(maxAccumulated)}MB</Badge> {overuseMb > 0 ? `(Sobrepasado: ${mbFormat(overuseMb)})` : `(Dentro del límite: ${mbFormat(Math.abs(overuseMb))}MB)`}</p>
                 </div>
               </CardContent>
             </Card>
