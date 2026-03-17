@@ -13,7 +13,7 @@ export function Main(){
     const [inputUsedMb, setInputUsedMb] = useState(0)
     const [inputMaxMb, setInputMaxMb] = useState(200000)
     const [spentMb, setSpentMb] = useState(0)
-    const [maxMb, setMaxMb] = useState(0)
+    const [maxMb, setMaxMb] = useState(200000)
     const [isAriaDisabled, setIsAriaDisabled] = useState(false)
     const { avgPerDay, maxAccumulated, overuseMb } = calculateMb(inputMaxMb, inputUsedMb)
 
