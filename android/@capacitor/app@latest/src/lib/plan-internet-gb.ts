@@ -1,11 +1,13 @@
 import { Temporal } from "@js-temporal/polyfill";
 
-function getCycleDay(dateT = Temporal.Now.plainDateISO()) {
+const defaultDateReset = 8
+
+function getCycleDay(dateT = Temporal.Now.plainDateISO(), dateReset = defaultDateReset) {
   // day 8 of the month is the reset day for the plan
   const init =
-    dateT.day >= 8
-      ? dateT.with({ day: 8 })
-      : dateT.subtract({ months: 1 }).with({ day: 8 });
+    dateT.day >= dateReset
+      ? dateT.with({ day: dateReset })
+      : dateT.subtract({ months: 1 }).with({ day: dateReset });
 
   const cycleDay = init.until(dateT, { largestUnit: "day" }).days;
 
