@@ -12,7 +12,9 @@
   ],
   "scripts": {
     "dev:console": "bun run --filter console dev",
-    "dev:android": "bun run --filter bun-react-template dev:web"
+    "dev:android": "bun run --filter bun-react-template dev:web",
+    "android:sync": "bun run --filter bun-react-template android:sync",
+    "android:open": "bun run --filter bun-react-template android:open"
   },
   "peerDependencies": {
     "typescript": "^5"

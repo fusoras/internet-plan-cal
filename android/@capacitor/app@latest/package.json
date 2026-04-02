@@ -9,6 +9,7 @@
     "dev:raw": "bun --hot src/index.ts",
     "dev:android": "HOST=0.0.0.0 PORT=3001 bun --hot src/index.ts",
     "android:sync": "bun run build && bunx cap sync android",
+    "android:open": "bunx cap open android",
     "start": "NODE_ENV=production bun src/index.ts",
     "build": "bun run build.ts"
   },
