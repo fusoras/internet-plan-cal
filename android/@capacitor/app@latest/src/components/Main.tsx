@@ -9,6 +9,13 @@ import { Badge } from "@/components/ui/badge"
 
 type Mbs = { valueMin?: number, valueMax?: number }
 
+function normalizeMbValue(value: string) {
+    console.log("value in normalizeMbValue", value)
+    const cleanedValue = value.replace(/[.,]/g, "")
+    console.log("cleanedValue in normalizeMbValue", cleanedValue)
+    return cleanedValue === "" ? 0 : Number(cleanedValue)
+}
+
 export function Main(){
     const [inputUsedMb, setInputUsedMb] = useState(0)
     const [inputMaxMb, setInputMaxMb] = useState(200000)
@@ -44,7 +51,7 @@ export function Main(){
             <FieldGroup>
                 <Field>
                     <FieldLabel htmlFor="fieldgroup-name">MB consumidos</FieldLabel>
-                    <Input aria-invalid={isAriaDisabled} id="fieldgroup-name" type="number" min="0" step="1" placeholder="1000 = 1gb" onChange={(e) => handleInput({valueMin: Number(e.target.value)})} />
+                    <Input aria-invalid={isAriaDisabled} id="fieldgroup-name" type="number" min="0" step="1" placeholder="1000 = 1gb" onChange={(e) => handleInput({valueMin: normalizeMbValue(e.target.value)})} />
                 </Field>
                 <Field>
                     <FieldLabel htmlFor="fieldgroup-email">MB maximos del plan</FieldLabel>
@@ -54,7 +61,7 @@ export function Main(){
                         min="0"
                         step="1"
                         placeholder="200000 = 200gb"
-                        onChange={(e) => handleInput({valueMax: Number(e.target.value)})}
+                        onChange={(e) => handleInput({valueMax: normalizeMbValue(e.target.value)})}
                     />
                     <FieldDescription>
                     </FieldDescription>
