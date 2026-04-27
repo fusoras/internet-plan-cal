@@ -1,7 +1,7 @@
 {
   "name": "console",
   "dependencies": {
-    "@js-temporal/polyfill": "^0.5.1"
+    "@js-temporal/polyfill": "0.5.1"
   },
   "scripts": {
     "dev": "bun --watch plan-internet-gb.ts"

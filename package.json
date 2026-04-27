@@ -17,6 +17,6 @@
     "android:open": "bun run --filter bun-react-template android:open"
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "5"
   }
 }
