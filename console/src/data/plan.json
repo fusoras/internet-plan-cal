@@ -1,7 +1,7 @@
 {
-    "input": {
+    "default": {
         "planMb": 200000,
-        "usedMb": 50600
-    },
-    "planDuration": 30
+        "planDuration": 30,
+        "usedMb": 0
+    }
 }

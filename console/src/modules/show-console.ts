@@ -1,9 +1,9 @@
 import { mbFormat, dateNow, cycleDay } from "./plan-internet-gb"
 
 // # Console
-export function showConsole ({ max, used, freeGB, maxAccumulated, avgPerDay, overuseMb }) {
+export function showConsole ({ maxMb, usedMb, freeGB, maxAccumulated, avgPerDay, overuseMb }) {
   console.log("-------------------------------")
-  console.log(` MB del plan: ${mbFormat(max)}MB | MB consumidos: ${mbFormat(used)}MB | MB restantes: ${mbFormat(freeGB)}`)
+  console.log(` MB del plan: ${mbFormat(maxMb)}MB | MB consumidos: ${mbFormat(usedMb)}MB | MB restantes: ${mbFormat(freeGB)}`)
   console.log("-------------------------------")
   console.log(`- Día actual: ${dateNow.day}`)
   console.log(`- Días desde el último reseteo: ${cycleDay}`)
