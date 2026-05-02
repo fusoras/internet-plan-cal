@@ -1,0 +1,7 @@
+{
+    "input": {
+        "planMb": 200000,
+        "usedMb": 50600
+    },
+    "planDuration": 30
+}
