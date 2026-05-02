@@ -16,5 +16,3 @@ function getCycleDay(dateT = dateNow, dateReset = defaultDateReset) {
 }
 
 export const { init, cycleDay } = getCycleDay()
-
-export const mbFormat = (rawMegabytes = 0) => rawMegabytes.toLocaleString('es-MX')
