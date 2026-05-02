@@ -1,4 +1,4 @@
-import { calculateMb } from "./modules/calculate-mb.js"
-import { showConsole } from "./modules/show-console.js"
+import { calculateMb } from "./modules/calculate-mb"
+import { showConsole } from "./modules/show-console"
 
 showConsole(calculateMb())

@@ -1,4 +1,4 @@
-import { mbFormat, dateNow, cycleDay } from "./plan-internet-gb.js"
+import { mbFormat, dateNow, cycleDay } from "./plan-internet-gb"
 
 // # Console
 export function showConsole ({ max, used, freeGB, maxAccumulated, avgPerDay, overuseMb }) {

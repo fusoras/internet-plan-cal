@@ -1,8 +1,9 @@
 import { Temporal } from "@js-temporal/polyfill"
 
 const defaultDateReset = 8
+export const dateNow = Temporal.Now.plainDateISO()
 
-function getCycleDay(dateT = Temporal.Now.plainDateISO(), dateReset = defaultDateReset) {
+function getCycleDay(dateT = dateNow, dateReset = defaultDateReset) {
   // day 8 of the month is the reset day for the plan
   const init =
     dateT.day >= dateReset
@@ -14,7 +15,6 @@ function getCycleDay(dateT = Temporal.Now.plainDateISO(), dateReset = defaultDat
   return { init, cycleDay };
 }
 
-export const dateNow = Temporal.Now.plainDateISO()
-export const { init, cycleDay } = getCycleDay(dateNow)
+export const { init, cycleDay } = getCycleDay()
 
 export const mbFormat = (rawMegabytes = 0) => rawMegabytes.toLocaleString('es-MX')
