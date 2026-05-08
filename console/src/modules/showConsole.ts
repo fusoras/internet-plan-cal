@@ -2,9 +2,9 @@ import { dateNow, cycleDay } from "./getCycleDay"
 import { formatMb } from "./utils"
 
 // # Console
-export function showConsole ({ maxMb, usedMb, freeGB, maxAccumulated, avgPerDay, overuseMb }) {
+export function showConsole ({ maxMb, usedMb, freeMb, maxAccumulated, avgPerDay, overuseMb }) {
   console.log("-------------------------------")
-  console.log(` MB del plan: ${formatMb(maxMb)}MB | MB consumidos: ${formatMb(usedMb)}MB | MB restantes: ${formatMb(freeGB)}`)
+  console.log(` MB del plan: ${formatMb(maxMb)}MB | MB consumidos: ${formatMb(usedMb)}MB | MB restantes: ${formatMb(freeMb)}`)
   console.log("-------------------------------")
   console.log(`- Día actual: ${dateNow.day}`)
   console.log(`- Días desde el último reseteo: ${cycleDay}`)
