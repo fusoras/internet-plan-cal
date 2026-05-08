@@ -1,6 +1,7 @@
-import { useState} from "react"
-import { todayT, mbFormat, cycleDay, calculateMb } from '@/lib/plan-internet-gb'
-
+import { useState } from "react"
+import { calculateMb } from '@/modules/calculateMb'
+import { formatMb as mbFormat } from "@/modules/utils"
+import { dateNow, cycleDay } from "@/modules/getCycleDay"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field"
@@ -80,11 +81,11 @@ export function Main(){
                     <p>MB restantes: <Badge variant="destructive" >{mbFormat(maxMb - spentMb)}MB</Badge></p>
                 </div>
                 <div className="border-t mt-3 p-2">
-                    <p>Día actual: <Badge variant="outline">{todayT.day}</Badge></p>
+                    <p>Día actual: <Badge variant="outline">{dateNow.day}</Badge></p>
                     <p>Días desde el último reseteo: <Badge variant="outline">{cycleDay}</Badge></p>
                     <h2 className="text-xl">Recomendaciones</h2>
                     <p>MB recomendados consumir por día: <Badge variant="outline">{mbFormat(avgPerDay)}MB</Badge></p>
-                    <p>Hoy consumir máximo hasta: <Badge variant="outline">{mbFormat(maxAccumulated)}MB</Badge> {overuseMb > 0 ? `(Sobrepasado: ${mbFormat(overuseMb)})` : `(Dentro del límite: ${mbFormat(Math.abs(overuseMb))}MB)`}</p>
+                    <p>Hoy consumir máximo hasta: <Badge variant="outline">{mbFormat(maxAccumulated)}MB</Badge> {overuseMb < 0 ? `(Sobrepasado: ${mbFormat(overuseMb)})` : `(Dentro del límite: ${mbFormat(Math.abs(overuseMb))}MB)`}</p>
                 </div>
               </CardContent>
             </Card>

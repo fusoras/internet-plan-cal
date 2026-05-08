@@ -1,0 +1,1 @@
+export const formatMb = (rawMegabytes = 0) => rawMegabytes.toLocaleString('es-MX')

@@ -1,0 +1,8 @@
+{
+    "default": {
+        "planMb": 200000,
+        "planDuration": 30,
+        "usedMb": 0,
+        "dateReset": 8
+    }
+}
