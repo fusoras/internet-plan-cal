@@ -7,9 +7,9 @@ const defaultPlanDuration = plan.default.planDuration
 
 export function calculateMb(maxMb = defaultPlanMb, usedMb = defaultUsedMb) {
   const freeGB = maxMb - usedMb
-  const avgPerDay = Math.trunc(maxMb / defaultPlanDuration); // Math.trunc quita los decimales
-  const maxAccumulated = Math.trunc((maxMb * cycleDay) / defaultPlanDuration)
-  const overuseMb = usedMb - maxAccumulated
+  const avgPerDay = Math.trunc(maxMb / defaultPlanDuration);
+  const maxAccumulated = Math.trunc((maxMb * (cycleDay + 1)) / (defaultPlanDuration)) // It is '+ 1' to avoid multiplying by '0'
+  const overuseMb = maxAccumulated - usedMb
 
   return { maxMb, usedMb, freeGB, maxAccumulated, avgPerDay, overuseMb }
 }
