@@ -12,8 +12,9 @@ export function showConsole ({ maxMb, usedMb, freeGB, maxAccumulated, avgPerDay,
   console.log("# Recomendaciones")
   console.log(`- MB recomendados consumir por día: ${formatMb(avgPerDay)}MB`)
   console.log(`- Hoy consumir máximo hasta: ${formatMb(maxAccumulated)}MB ` + (
-    overuseMb > 0 
-    ? `(Sobrepasado: ${formatMb(overuseMb)})` 
-    : `(Dentro del límite: ${formatMb(Math.abs(overuseMb))}MB)`))
+    overuseMb < 0
+    ? `(Sobrepasado: ${formatMb(overuseMb)})`
+    : `(Dentro del límite: ${formatMb(overuseMb)}MB)`)
+  )
   console.log("-------------------------------")
 }
