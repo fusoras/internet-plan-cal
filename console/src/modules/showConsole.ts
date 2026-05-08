@@ -1,4 +1,4 @@
-import { dateNow, cycleDay } from "./plan-internet-gb"
+import { dateNow, cycleDay } from "./getCycleDay"
 import { formatMb } from "./utils"
 
 // # Console

@@ -1,4 +1,4 @@
-import { cycleDay } from "./plan-internet-gb"
+import { cycleDay } from "./getCycleDay"
 import plan from "../data/plan.json" with { type: "json" }
 
 const defaultPlanMb = plan.default.planMb
