@@ -10,9 +10,9 @@ import { Badge } from "@/components/ui/badge";
 
 type Mbs = { valueMin?: number; valueMax?: number; };
 
-function normalizeMbValue(value: string) {
+function normalizeMb(value: string) {
   console.log("value in normalizeMbValue", value);
-  const cleanedValue = value.replace(/[.,]/g, "");
+  const cleanedValue = value.replace(/[,]/g, "");
   console.log("cleanedValue in normalizeMbValue", cleanedValue);
   return cleanedValue === "" ? 0 : Number(cleanedValue);
 }
@@ -72,7 +72,7 @@ export function Main() {
             min="0"
             step="1"
             placeholder={unitSelection === "Megabytes" ? "50000 MB" : "50 GB"}
-            onChange={(e) => handleInput({ valueMin: normalizeMbValue(e.target.value) })}
+            onChange={(e) => handleInput({ valueMin: normalizeMb(e.target.value) })}
           />
         </Field>
         <Field>
@@ -83,7 +83,7 @@ export function Main() {
             min="0"
             step="1"
             placeholder={unitSelection === "Megabytes" ? "200000 MB" : "200 GB"}
-            onChange={(e) => handleInput({ valueMax: normalizeMbValue(e.target.value) })}
+            onChange={(e) => handleInput({ valueMax: normalizeMb(e.target.value) })}
           />
           <FieldDescription></FieldDescription>
         </Field>
